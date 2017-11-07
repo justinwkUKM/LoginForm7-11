@@ -22,6 +22,8 @@ public class LoginActivity extends AppCompatActivity {
     Button btLogin, btNext;
     TextView tvResult;
     String stName, stEmail, stPassword;
+
+    //define as a global variable
     SharedPreferences pref;
 
 
@@ -39,8 +41,24 @@ public class LoginActivity extends AppCompatActivity {
         btLogin=(Button)findViewById(R.id.buttonLogin);
         btNext=(Button)findViewById(R.id.buttonNext);
         tvResult=(TextView) findViewById(R.id.textViewResult);
+
         pref  = getApplicationContext().getSharedPreferences("MyData",0);
 
+
+
+        if (pref.contains("stName")){
+
+            String s = pref.getString("stName", "N/A");
+            etName.setText(s);
+
+            String u = pref.getString("stEmail", "N/A");
+            etEmail.setText(u);
+
+            String p = pref.getString("stPassword", "N/A");
+            etPassword.setText(p);
+
+            tvResult.setText(s +"\n"+u+"\n"+p);
+        }
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,8 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                             Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 }else{
-
-                        SharedPreferences.Editor editor = pref.edit();
+                    SharedPreferences.Editor editor = pref.edit();
 
                         editor.putString("stName", stName);
                         editor.putString("stEmail", stEmail);
@@ -98,9 +115,6 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(i);
 
                 }
-
-
-
             }
         });
     }
